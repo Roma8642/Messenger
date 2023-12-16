@@ -2,8 +2,14 @@ import React from 'react';
 import Image from "next/image";
 import AuthForm from "@/app/(site)/components/AuthForm";
 
+
+
 const Page = () => {
     return (
+
+
+
+
         <div
             className="
 flex
