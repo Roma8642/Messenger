@@ -6,6 +6,9 @@ import Input from "@/app/components/inputs/Input";
 import Button from "@/app/components/Button";
 import AuthSocialButton from "@/app/(site)/components/AuthSocialButton";
 import {BsGithub, BsGoogle} from "react-icons/bs";
+import axios from "axios";
+import {toast} from "react-hot-toast";
+import {signIn} from "next-auth/react";
 type  Variant = 'LOGIN'| 'REGISTER'
 const AuthForm = () => {
     const [variant, setVariant]=useState<Variant>('LOGIN')
@@ -30,14 +33,36 @@ const AuthForm = () => {
     const onSubmit:SubmitHandler<FieldValues>=(data)=>{
         setIsLoading(true);
         if(variant==='REGISTER'){
-            //axios reg
+           axios.post('/api/register', data)
+               .catch(()=>toast.error('Something went wrong'))
+               .finally(()=>setIsLoading(false))
         } if(variant==='LOGIN'){
-            //nextAuth
+            signIn('credentials',{
+                ...data,
+                redirect:false
+            }).then((callback)=>{
+                if(callback?.error){
+                    toast.error('Invalid credentials')
+                }
+                if(callback?.ok && !callback?.error){
+                    toast.success('Logged in')
+                }
+            })
+                .finally(()=>setIsLoading(false))
         }
     }
     const socialAction=(action:string)=>{
         setIsLoading(true)
-        //nextAuth Social
+       signIn(action,{redirect:false}).then((callback)=>{
+           if(callback?.error){
+               toast.error('Invalid credentials')
+           }
+           if(callback?.ok && !callback?.error){
+               toast.success('Logged in')
+           }
+           setIsLoading(false)
+       })
+           .finally(()=>setIsLoading(false))
     }
     return (
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
