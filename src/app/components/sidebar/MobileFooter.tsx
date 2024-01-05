@@ -7,10 +7,10 @@ import MobileItem from "@/app/components/sidebar/MobileItem";
 const MobileFooter = () => {
     const routes = useRoutes()
     const {isOpen} = useConversation()
-   if(isOpen) return null
+    if (isOpen) return null
     return (
 
-            <div
+        <div
             className="
             fixed
             bg-white
@@ -23,7 +23,7 @@ const MobileFooter = () => {
             px-4
             lg:hidden
             "
-            >
+        >
             {routes.map((route) => (
                 <MobileItem
                     key={route.label}
@@ -36,7 +36,8 @@ const MobileFooter = () => {
         </div>
 
 
-    )};
+    )
+};
 
 
 export default MobileFooter;
