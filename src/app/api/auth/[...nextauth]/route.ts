@@ -51,7 +51,7 @@ export const authOptions: AuthOptions = {
                 return user;
             }
         })
-    ],
+    ],//lalala
     debug: process.env.NODE_ENV === 'development',
     session: {
         strategy: "jwt",
